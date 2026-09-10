@@ -443,7 +443,7 @@
   }
 
   // ---------- load SDK (dynamic import so failures are visible) ----------
-  let createClient, isSuccessful, studionet;
+  let createClient, isSuccessful, studionet, TransactionStatus;
   let sdkReady = false;
   let readClient = null;
 
@@ -452,9 +452,11 @@
     try {
       const core = await import("https://esm.sh/genlayer-js");
       const chains = await import("https://esm.sh/genlayer-js/chains");
+      const types = await import("https://esm.sh/genlayer-js/types");
       createClient = core.createClient;
       isSuccessful = core.isSuccessful;
       studionet = chains.studionet;
+      TransactionStatus = types.TransactionStatus;
       readClient = createClient({ chain: studionet });
       sdkReady = true;
       log("SDK loaded.", "ok");
@@ -530,10 +532,13 @@
       });
       log(`Transaction sent (${shortAddr(txId)}), waiting for consensus...`);
 
-      const receipt = await writeClient.waitForFinalization({ hash: txId });
-      if (!isSuccessful(receipt)) {
-        throw new Error(receipt.statusName + " / " + receipt.txExecutionResultName);
-      }
+      const receipt = await writeClient.waitForTransactionReceipt({
+        hash: txId,
+        status: TransactionStatus.FINALIZED,
+        retries: 100,
+        interval: 3000,
+      });
+      log(`Receipt: <span class="mono">${JSON.stringify(receipt)}</span>`);
       log(`Agent <b>${agent_id}</b> registered successfully.`, "ok");
       addToLedger(agent_id);
       $("reg-agent-id").value = "";
@@ -571,10 +576,13 @@
       });
       log(`Verification transaction sent (${shortAddr(txId)}), waiting for validator consensus...`);
 
-      const receipt = await writeClient.waitForFinalization({ hash: txId });
-      if (!isSuccessful(receipt)) {
-        throw new Error(receipt.statusName + " / " + receipt.txExecutionResultName);
-      }
+      const receipt = await writeClient.waitForTransactionReceipt({
+        hash: txId,
+        status: TransactionStatus.FINALIZED,
+        retries: 100,
+        interval: 3000,
+      });
+      log(`Receipt: <span class="mono">${JSON.stringify(receipt)}</span>`);
       log(`Verification for <b>${agent_id}</b> complete.`, "ok");
       addToLedger(agent_id);
       $("lk-agent-id").value = agent_id;
