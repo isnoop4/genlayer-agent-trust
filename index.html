@@ -523,15 +523,10 @@
     log(`Registering agent <b>${agent_id}</b>...`);
 
     try {
-      const write = {
+      const txId = await writeClient.writeContract({
         address: CONTRACT_ADDRESS,
         functionName: "register_agent",
         args: [agent_id, capability, evidence_url],
-      };
-      const estimate = await writeClient.estimateTransactionFeesForWrite(write);
-      const txId = await writeClient.writeContract({
-        ...write,
-        fees: { distribution: estimate.distribution, feeValue: estimate.feeValue },
       });
       log(`Transaction sent (${shortAddr(txId)}), waiting for consensus...`);
 
@@ -569,15 +564,10 @@
     log(`Requesting verification for <b>${agent_id}</b>...`);
 
     try {
-      const write = {
+      const txId = await writeClient.writeContract({
         address: CONTRACT_ADDRESS,
         functionName: "verify_capability",
         args: [agent_id],
-      };
-      const estimate = await writeClient.estimateTransactionFeesForWrite(write);
-      const txId = await writeClient.writeContract({
-        ...write,
-        fees: { distribution: estimate.distribution, feeValue: estimate.feeValue },
       });
       log(`Verification transaction sent (${shortAddr(txId)}), waiting for validator consensus...`);
 
