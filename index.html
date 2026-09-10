@@ -487,7 +487,6 @@
         account: walletAddress,
         provider,
       });
-      await writeClient.connect("studionet");
       $("wallet-status").textContent = shortAddr(walletAddress);
       $("connect-btn").textContent = "Connected";
       $("connect-btn").disabled = true;
