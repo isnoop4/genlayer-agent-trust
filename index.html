@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -60,7 +60,6 @@
   }
   .brand span{
     font-size:0.75rem;
-    color: var(--ink-faded);
     color: #9FB0A5;
   }
   .contract-chip{
@@ -71,7 +70,7 @@
     color:#C9D8CE;
   }
   #wallet-area{
-    display:flex; align-items:center; gap:0.6rem;
+    display:flex; align-items:center; gap:0.6rem; flex-wrap: wrap;
   }
   button{
     font-family: inherit;
@@ -172,7 +171,6 @@
   label{
     display:block;
     font-size:0.75rem;
-    text-transform: none;
     color:#5B6B5E;
     margin: 0.9rem 0 0.3rem;
   }
@@ -284,10 +282,10 @@
     padding:1.1rem 1.3rem;
     font-size:0.78rem;
     color:#9FB0A5;
-    max-height: 220px;
+    max-height: 260px;
     overflow-y:auto;
   }
-  #log .row{ margin-bottom:0.45rem; }
+  #log .row{ margin-bottom:0.45rem; word-break: break-word; }
   #log .row .t{ color:#5B6B57; margin-right:0.5rem; }
   #log .row.err{ color:#D08477; }
   #log .row.ok{ color:#7FC29B; }
@@ -309,19 +307,20 @@
   </div>
   <div id="wallet-area">
     <span class="contract-chip mono" id="contract-chip">0x2AaD96...35F978</span>
-    <span id="wallet-status">wallet belum terhubung</span>
-    <button class="btn-primary" id="connect-btn">Hubungkan Wallet</button>
+    <span id="wallet-status">wallet not connected</span>
+    <button class="btn-primary" id="connect-btn">Connect Wallet</button>
   </div>
 </header>
 
 <section class="hero">
   <div class="seal"><span class="seal-text">GENLAYER</span></div>
-  <h2>Klaim kemampuan agent, diuji lewat evidence — bukan lewat kata-kata.</h2>
+  <h2>Agent capability claims, tested by evidence — not by words.</h2>
   <p>
-    AgentTrust mencatat klaim kapabilitas AI agent di on-chain, lalu meminta
-    beberapa validator independen menilai evidence pendukungnya secara terpisah.
-    Hasilnya cuma dua: <b style="color:var(--verified)">VERIFIED</b> atau
-    <b style="color:var(--rejected)">REJECTED</b> — dan itu keputusan yang harus disepakati bersama.
+    AgentTrust records AI agent capability claims on-chain, then asks several
+    independent validators to judge the supporting evidence separately.
+    There are only two outcomes: <b style="color:var(--verified)">VERIFIED</b> or
+    <b style="color:var(--rejected)">REJECTED</b> — and it has to be a decision
+    they reach together.
   </p>
 </section>
 
@@ -329,89 +328,82 @@
 
   <!-- Register -->
   <div class="card">
-    <h3>Daftarkan Klaim</h3>
-    <p class="desc">Catat agent baru beserta klaim kapabilitas dan link evidence-nya.</p>
+    <h3>File a Claim</h3>
+    <p class="desc">Register a new agent with its capability claim and evidence link.</p>
 
     <label for="reg-agent-id">Agent ID</label>
-    <input id="reg-agent-id" placeholder="mis. researcher-01" />
+    <input id="reg-agent-id" placeholder="e.g. researcher-01" />
 
-    <label for="reg-capability">Klaim kapabilitas</label>
-    <textarea id="reg-capability" placeholder="mis. Has experience summarizing legal documents"></textarea>
+    <label for="reg-capability">Capability claim</label>
+    <textarea id="reg-capability" placeholder="e.g. Has experience summarizing legal documents"></textarea>
 
-    <label for="reg-evidence">URL evidence</label>
+    <label for="reg-evidence">Evidence URL</label>
     <input id="reg-evidence" placeholder="https://..." />
 
     <div class="form-actions">
-      <button class="btn-dark" id="reg-submit">Kirim Klaim</button>
+      <button class="btn-dark" id="reg-submit">Submit Claim</button>
     </div>
-    <p class="hint">Kalau agent ID sudah pernah dipakai, hanya wallet yang pertama kali mendaftarkannya yang bisa memperbarui klaim ini.</p>
+    <p class="hint">If this agent ID already exists, only the wallet that registered it first can update the claim.</p>
   </div>
 
   <!-- Verify -->
   <div class="card">
-    <h3>Minta Verifikasi</h3>
-    <p class="desc">Kirim agent ID ke jaringan validator untuk dinilai berdasarkan evidence yang tercatat.</p>
+    <h3>Request Verification</h3>
+    <p class="desc">Send an agent ID to the validator network to be judged against its recorded evidence.</p>
 
     <label for="ver-agent-id">Agent ID</label>
-    <input id="ver-agent-id" placeholder="mis. researcher-01" />
+    <input id="ver-agent-id" placeholder="e.g. researcher-01" />
 
     <div class="form-actions">
-      <button class="btn-dark" id="ver-submit">Minta Verifikasi</button>
+      <button class="btn-dark" id="ver-submit">Request Verification</button>
     </div>
-    <p class="hint">Proses ini menunggu konsensus dari beberapa validator AI — bisa makan waktu beberapa puluh detik.</p>
+    <p class="hint">This waits for consensus among several AI validators — it can take up to a minute.</p>
   </div>
 
   <!-- Lookup -->
   <div class="card full-span">
-    <h3>Lihat Berkas Agent</h3>
-    <p class="desc">Cek status klaim, evidence, dan hasil verifikasi terakhir seorang agent.</p>
+    <h3>Look Up Agent File</h3>
+    <p class="desc">Check an agent's claim, evidence, and latest verification result.</p>
 
     <label for="lk-agent-id">Agent ID</label>
-    <input id="lk-agent-id" placeholder="mis. researcher-01" />
+    <input id="lk-agent-id" placeholder="e.g. researcher-01" />
     <div class="form-actions">
-      <button class="btn-dark" id="lk-submit">Cari</button>
+      <button class="btn-dark" id="lk-submit">Search</button>
     </div>
 
     <div style="margin-top:1.2rem;">
-      <div id="result-empty">Belum ada berkas yang dibuka.</div>
+      <div id="result-empty">No file opened yet.</div>
       <div class="dossier" id="dossier">
         <div class="stamp" id="stamp">VERIFIED</div>
         <div class="field"><b>Agent ID</b><div class="val" id="d-id"></div></div>
-        <div class="field"><b>Klaim Kapabilitas</b><div class="val" id="d-cap"></div></div>
+        <div class="field"><b>Capability Claim</b><div class="val" id="d-cap"></div></div>
         <div class="field"><b>Evidence</b><div class="val"><a id="d-ev" target="_blank" rel="noopener"></a></div></div>
         <div class="field"><b>Status</b><div class="val" id="d-status"></div></div>
       </div>
     </div>
 
-    <label style="margin-top:1.6rem;">Riwayat pencarian di browser ini</label>
+    <label style="margin-top:1.6rem;">Search history in this browser</label>
     <ul class="ledger-list" id="ledger-list">
-      <li class="ledger-empty">Belum ada agent ID yang dilihat.</li>
+      <li class="ledger-empty">No agent ID viewed yet.</li>
     </ul>
   </div>
 
   <!-- Log -->
   <div class="card full-span" style="background:transparent; box-shadow:none; padding:0;">
     <h3 style="color:var(--parchment);">Transcript</h3>
-    <div id="log"><div class="row"><span class="t">--:--:--</span>menunggu aktivitas...</div></div>
+    <div id="log"><div class="row"><span class="t">--:--:--</span>waiting for activity...</div></div>
   </div>
 
 </main>
 
 <footer>
-  Kontrak: <a href="https://explorer-studio.genlayer.com/address/0x2AaD96E33d58D6db4E5473F03bc8f203DA35F978" target="_blank" rel="noopener" class="mono">0x2AaD96...35F978</a>
+  Contract: <a href="https://explorer-studio.genlayer.com/address/0x2AaD96E33d58D6db4E5473F03bc8f203DA35F978" target="_blank" rel="noopener" class="mono">0x2AaD96...35F978</a>
   &nbsp;·&nbsp; GenLayer Studio Network
 </footer>
 
 <script type="module">
-  import { createClient, isSuccessful } from "https://esm.sh/genlayer-js";
-  import { studionet } from "https://esm.sh/genlayer-js/chains";
-
   const CONTRACT_ADDRESS = "0x2AaD96E33d58D6db4E5473F03bc8f203DA35F978";
   const LEDGER_KEY = "agenttrust_ledger";
-
-  const readClient = createClient({ chain: studionet });
-  let writeClient = null;
-  let walletAddress = null;
 
   const $ = (id) => document.getElementById(id);
 
@@ -424,39 +416,91 @@
     $("log").scrollTop = $("log").scrollHeight;
   }
 
+  // Surface anything that would otherwise fail silently (important on
+  // mobile in-app browsers, where there's no easy console access).
+  window.addEventListener("error", (e) => {
+    log("Page error: " + (e.message || e), "err");
+  });
+  window.addEventListener("unhandledrejection", (e) => {
+    log("Unhandled promise error: " + (e.reason?.message || e.reason), "err");
+  });
+
   function shortAddr(a) {
     return a ? a.slice(0, 8) + "..." + a.slice(-6) : "";
   }
 
-  // ---------- wallet ----------
+  function getInjectedProvider() {
+    // Different wallet browsers inject differently: MetaMask and most
+    // wallets use window.ethereum, OKX Wallet also exposes window.okxwallet,
+    // and some environments expose several providers under
+    // window.ethereum.providers (EIP-5749/6963 style multi-injection).
+    if (window.ethereum?.providers?.length) {
+      return window.ethereum.providers[0];
+    }
+    if (window.ethereum) return window.ethereum;
+    if (window.okxwallet) return window.okxwallet;
+    return null;
+  }
+
+  // ---------- load SDK (dynamic import so failures are visible) ----------
+  let createClient, isSuccessful, studionet;
+  let sdkReady = false;
+  let readClient = null;
+
+  async function loadSdk() {
+    log("Loading GenLayer SDK...");
+    try {
+      const core = await import("https://esm.sh/genlayer-js");
+      const chains = await import("https://esm.sh/genlayer-js/chains");
+      createClient = core.createClient;
+      isSuccessful = core.isSuccessful;
+      studionet = chains.studionet;
+      readClient = createClient({ chain: studionet });
+      sdkReady = true;
+      log("SDK loaded.", "ok");
+    } catch (err) {
+      console.error(err);
+      log("Failed to load the GenLayer SDK: " + (err?.message || err), "err");
+      log("Reads and transactions will not work until this is fixed — check your internet connection or try reloading.", "err");
+    }
+  }
+
+  let writeClient = null;
+  let walletAddress = null;
+
   $("connect-btn").addEventListener("click", async () => {
-    if (!window.ethereum) {
-      log("MetaMask (atau wallet browser lain) tidak terdeteksi.", "err");
-      alert("Perlu wallet browser (misal MetaMask) untuk mengirim transaksi.");
+    if (!sdkReady) {
+      log("SDK is not loaded yet, can't connect wallet.", "err");
+      return;
+    }
+    const provider = getInjectedProvider();
+    if (!provider) {
+      log("No injected wallet found (window.ethereum / window.okxwallet is undefined).", "err");
+      alert("No browser wallet detected. Open this page inside a wallet app's browser (e.g. MetaMask, OKX Wallet) or install a wallet extension.");
       return;
     }
     try {
-      const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+      const accounts = await provider.request({ method: "eth_requestAccounts" });
       walletAddress = accounts[0];
       writeClient = createClient({
         chain: studionet,
         account: walletAddress,
-        provider: window.ethereum,
+        provider,
       });
       await writeClient.connect("studionet");
       $("wallet-status").textContent = shortAddr(walletAddress);
-      $("connect-btn").textContent = "Terhubung";
+      $("connect-btn").textContent = "Connected";
       $("connect-btn").disabled = true;
-      log(`Wallet terhubung: ${shortAddr(walletAddress)}`, "ok");
+      log(`Wallet connected: ${shortAddr(walletAddress)}`, "ok");
     } catch (err) {
       console.error(err);
-      log("Gagal menghubungkan wallet: " + (err?.message || err), "err");
+      log("Failed to connect wallet: " + (err?.message || err), "err");
     }
   });
 
   function requireWallet() {
     if (!writeClient) {
-      alert("Hubungkan wallet dulu sebelum mengirim transaksi.");
+      alert("Connect your wallet first before sending a transaction.");
       return false;
     }
     return true;
@@ -464,19 +508,20 @@
 
   // ---------- register_agent ----------
   $("reg-submit").addEventListener("click", async () => {
+    if (!sdkReady) { log("SDK not loaded yet.", "err"); return; }
     if (!requireWallet()) return;
     const agent_id = $("reg-agent-id").value.trim();
     const capability = $("reg-capability").value.trim();
     const evidence_url = $("reg-evidence").value.trim();
     if (!agent_id || !capability || !evidence_url) {
-      alert("Isi semua field dulu ya.");
+      alert("Please fill in all fields.");
       return;
     }
 
     const btn = $("reg-submit");
     btn.disabled = true;
-    btn.textContent = "Mengirim...";
-    log(`Mendaftarkan agent <b>${agent_id}</b>...`);
+    btn.textContent = "Sending...";
+    log(`Registering agent <b>${agent_id}</b>...`);
 
     try {
       const write = {
@@ -489,39 +534,40 @@
         ...write,
         fees: { distribution: estimate.distribution, feeValue: estimate.feeValue },
       });
-      log(`Transaksi terkirim (${shortAddr(txId)}), menunggu konsensus...`);
+      log(`Transaction sent (${shortAddr(txId)}), waiting for consensus...`);
 
       const receipt = await writeClient.waitForFinalization({ hash: txId });
       if (!isSuccessful(receipt)) {
         throw new Error(receipt.statusName + " / " + receipt.txExecutionResultName);
       }
-      log(`Agent <b>${agent_id}</b> berhasil didaftarkan.`, "ok");
+      log(`Agent <b>${agent_id}</b> registered successfully.`, "ok");
       addToLedger(agent_id);
       $("reg-agent-id").value = "";
       $("reg-capability").value = "";
       $("reg-evidence").value = "";
     } catch (err) {
       console.error(err);
-      log("Gagal mendaftarkan agent: " + (err?.message || err), "err");
+      log("Failed to register agent: " + (err?.message || err), "err");
     } finally {
       btn.disabled = false;
-      btn.textContent = "Kirim Klaim";
+      btn.textContent = "Submit Claim";
     }
   });
 
   // ---------- verify_capability ----------
   $("ver-submit").addEventListener("click", async () => {
+    if (!sdkReady) { log("SDK not loaded yet.", "err"); return; }
     if (!requireWallet()) return;
     const agent_id = $("ver-agent-id").value.trim();
     if (!agent_id) {
-      alert("Isi agent ID dulu.");
+      alert("Please enter an agent ID.");
       return;
     }
 
     const btn = $("ver-submit");
     btn.disabled = true;
-    btn.textContent = "Menunggu validator...";
-    log(`Meminta verifikasi untuk <b>${agent_id}</b>...`);
+    btn.textContent = "Waiting for validators...";
+    log(`Requesting verification for <b>${agent_id}</b>...`);
 
     try {
       const write = {
@@ -534,26 +580,26 @@
         ...write,
         fees: { distribution: estimate.distribution, feeValue: estimate.feeValue },
       });
-      log(`Transaksi verifikasi terkirim (${shortAddr(txId)}), menunggu konsensus validator...`);
+      log(`Verification transaction sent (${shortAddr(txId)}), waiting for validator consensus...`);
 
       const receipt = await writeClient.waitForFinalization({ hash: txId });
       if (!isSuccessful(receipt)) {
         throw new Error(receipt.statusName + " / " + receipt.txExecutionResultName);
       }
-      log(`Verifikasi untuk <b>${agent_id}</b> selesai.`, "ok");
+      log(`Verification for <b>${agent_id}</b> complete.`, "ok");
       addToLedger(agent_id);
       $("lk-agent-id").value = agent_id;
       lookupAgent(agent_id);
     } catch (err) {
       console.error(err);
-      log("Gagal memproses verifikasi: " + (err?.message || err), "err");
+      log("Failed to process verification: " + (err?.message || err), "err");
     } finally {
       btn.disabled = false;
-      btn.textContent = "Minta Verifikasi";
+      btn.textContent = "Request Verification";
     }
   });
 
-  // ---------- get_agent (read, tidak perlu wallet) ----------
+  // ---------- get_agent (read-only, no wallet required) ----------
   function parseAgentString(raw) {
     // format: agent_id=X;capability=Y;verified=True;evidence=Z
     const out = {};
@@ -566,7 +612,8 @@
   }
 
   async function lookupAgent(agent_id) {
-    log(`Membuka berkas <b>${agent_id}</b>...`);
+    if (!sdkReady) { log("SDK not loaded yet.", "err"); return; }
+    log(`Opening file for <b>${agent_id}</b>...`);
     try {
       const raw = await readClient.readContract({
         address: CONTRACT_ADDRESS,
@@ -576,10 +623,10 @@
       const data = parseAgentString(String(raw));
       renderDossier(data);
       addToLedger(agent_id);
-      log(`Berkas <b>${agent_id}</b> dimuat.`, "ok");
+      log(`File for <b>${agent_id}</b> loaded.`, "ok");
     } catch (err) {
       console.error(err);
-      log("Gagal membaca data agent: " + (err?.message || err), "err");
+      log("Failed to read agent data: " + (err?.message || err), "err");
     }
   }
 
@@ -589,7 +636,7 @@
     dossier.classList.add("show");
 
     $("d-id").textContent = data.agent_id || "-";
-    $("d-cap").textContent = data.capability || "(belum ada klaim)";
+    $("d-cap").textContent = data.capability || "(no claim yet)";
     const ev = $("d-ev");
     ev.textContent = data.evidence || "-";
     ev.href = data.evidence || "#";
@@ -597,12 +644,12 @@
     const verified = (data.verified || "").toLowerCase() === "true";
     const hasClaim = !!data.capability;
     $("d-status").textContent = !hasClaim
-      ? "Belum terdaftar"
-      : verified ? "Terverifikasi" : "Belum/tidak terverifikasi";
+      ? "Not registered yet"
+      : verified ? "Verified" : "Not verified";
 
     const stamp = $("stamp");
     stamp.classList.remove("dropped", "yes", "no");
-    void stamp.offsetWidth; // reset animasi
+    void stamp.offsetWidth; // restart animation
     if (hasClaim) {
       stamp.textContent = verified ? "VERIFIED" : "REJECTED";
       stamp.classList.add(verified ? "yes" : "no", "dropped");
@@ -614,13 +661,13 @@
   $("lk-submit").addEventListener("click", () => {
     const agent_id = $("lk-agent-id").value.trim();
     if (!agent_id) {
-      alert("Isi agent ID dulu.");
+      alert("Please enter an agent ID.");
       return;
     }
     lookupAgent(agent_id);
   });
 
-  // ---------- ledger (localStorage, hanya di browser ini) ----------
+  // ---------- ledger (localStorage, this browser only) ----------
   function getLedger() {
     try {
       return JSON.parse(localStorage.getItem(LEDGER_KEY) || "[]");
@@ -640,7 +687,7 @@
     const list = getLedger();
     const el = $("ledger-list");
     if (!list.length) {
-      el.innerHTML = '<li class="ledger-empty">Belum ada agent ID yang dilihat.</li>';
+      el.innerHTML = '<li class="ledger-empty">No agent ID viewed yet.</li>';
       return;
     }
     el.innerHTML = "";
@@ -659,6 +706,7 @@
   }
 
   renderLedger();
+  loadSdk();
 </script>
 
 </body>
